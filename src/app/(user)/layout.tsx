@@ -1,6 +1,14 @@
 import '../globals.css';
 
 import { Assistant } from 'next/font/google'
+import { Alegreya } from 'next/font/google';
+
+const alegreya = Alegreya({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'], 
+  variable: '--font-alegreya',
+  display: 'swap',
+})
 
 const assistant = Assistant({
   subsets: ['latin'],
@@ -19,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body className="font-assistant">
+      <body>
         <Header></Header>
         {children}
         <Footer></Footer>

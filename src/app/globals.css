@@ -9,6 +9,10 @@ body {
   font-family: var(--font-assistant);
 }
 
+.font-allegreya {
+  font-family: var(--font-alegreya);
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
