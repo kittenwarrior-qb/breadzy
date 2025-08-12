@@ -1,16 +1,20 @@
 "use client";
 
+import Image from "next/image";
+
 export default function AboutSection() {
   return (
     <section className="w-full py-12 bg-white">
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 items-stretch">
-        
+
         {/* Image 1 */}
-        <div className="w-full h-[500px]">
-          <img
-            src="https://theobroma.in/cdn/shop/files/FrenchBaguette.jpg?v=1710837211"
+        <div className="w-full h-[500px] relative">
+          <Image
+            src="/images/1.jpg"
             alt="Wheat"
-            className="w-full h-full object-cover"
+            fill
+            style={{ objectFit: "cover" }}
+            priority
           />
         </div>
 
@@ -26,20 +30,24 @@ export default function AboutSection() {
         </div>
 
         {/* Image 2 */}
-        <div className="w-full h-[500px]">
-          <img
-            src="https://cdn.hswstatic.com/gif/french-baguette.jpg"
+        <div className="w-full h-[500px] relative">
+          <Image
+            src="/images/2.jpg"
             alt="Dough"
-            className="w-full h-full object-cover"
+            fill
+            style={{ objectFit: "cover" }}
+            priority
           />
         </div>
 
         {/* Image 3 */}
-        <div className="w-full h-full">
-          <img
-            src="https://suckhoedoisong.qltns.mediacdn.vn/Images/duylinh/2021/05/24/Den%20Vau_resize.jpg"
+        <div className="w-full h-[500px] relative">
+          <Image
+            src="/images/3.jpg"
             alt="Bread"
-            className="w-full h-full object-cover"
+            fill
+            style={{ objectFit: "cover" }}
+            priority
           />
         </div>
       </div>
