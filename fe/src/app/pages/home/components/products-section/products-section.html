@@ -1,0 +1,39 @@
+<section class="w-full py-12 bg-white">
+  <div class="max-w-[1280px] mx-auto px-4">
+    <div *ngIf="loading" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <nz-skeleton *ngFor="let _ of [1, 2, 3, 4, 5, 6, 7, 8]" [nzActive]="true" [nzTitle]="true" class="skeleton-card">
+        <div class="skeleton-image">
+          <nz-skeleton [nzAvatar]="true" [nzActive]="true"></nz-skeleton>
+        </div>
+        <div class="skeleton-content">
+          <nz-skeleton [nzParagraph]="{ rows: 3 }" [nzActive]="true"></nz-skeleton>
+        </div>
+      </nz-skeleton>
+    </div>
+
+    <div *ngIf="products && products.length > 0">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div
+          *ngFor="let product of products"
+          class="overflow-hidden hover:shadow-lg transition-all duration-300"
+        >
+          <a
+            [routerLink]="['/', product.category, product.slug, product.variantSlug]"
+            class="cursor-pointer"
+          >
+            <img
+              [src]="product.image"
+              class="w-full aspect-square object-cover"
+              alt="{{ product.name }}"
+            />
+            <div class="p-4"> 
+              <h3>{{ product.name }}</h3>
+              <p>{{ product.description }}</p>
+              <p>{{ product.price | number:'1.0-0' }}đ</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

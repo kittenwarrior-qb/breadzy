@@ -1,0 +1,73 @@
+<button
+  nz-button
+  nz-dropdown
+  [nzDropdownMenu]="cartDropdown"
+  nzTrigger="hover"
+  class="relative cursor-pointer flex items-center gap-2"
+>
+  <nz-icon nzType="shopping-cart" [style.fontSize.px]="20"></nz-icon>
+  <span
+    *ngIf="(cartService.cartItems$ | async)?.length"
+    class="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center"
+  >
+    {{ (cartService.cartItems$ | async)?.length }}
+  </span>
+</button>
+
+<nz-dropdown-menu #cartDropdown="nzDropdownMenu">
+  <ng-container *ngIf="cartService.cartItems$ | async as items; else emptyCart">
+    <ul nz-menu class="w-[300px] max-h-[400px] overflow-y-auto">
+      <li *ngFor="let item of items" class="flex justify-between items-center p-2 border-b relative">
+        <div class="flex gap-2 items-center pr-5">
+          <img [src]="item.image" width="40" height="40" class="rounded" />
+          <div class="flex-1">
+            <div class="font-semibold truncate">{{ item.name }}</div>
+            <div class="text-sm">{{ item.price | currency: 'VND' }}</div>
+
+            <div class="flex items-center gap-2 mt-1">
+              <button
+                nz-button
+                nzSize="small"
+                (click)="updateQty(item.variantId, item.quantity - 1)"
+                [disabled]="item.quantity <= 1"
+              >−</button>
+              <span class="w-6 text-center">{{ item.quantity }}</span>
+              <button
+                nz-button
+                nzSize="small"
+                (click)="updateQty(item.variantId, item.quantity + 1)"
+              >+</button>
+            </div>
+          </div>
+        </div>
+
+        <button
+          (click)="handleRemove(item.variantId)"
+          class="absolute top-1 right-1 text-gray-500 "
+          nz-button
+          nzSize="small"
+          nzType="text"
+          nzShape="circle"
+        >
+          x
+        </button>
+
+      </li>
+
+      <li class="p-2 text-right font-bold">
+        Tổng: {{ totalPrice | currency: 'VND' }}
+      </li>
+
+      <li class="text-center p-2">
+        <a routerLink="/cart" nz-button  nzSize="small">Xem giỏ hàng</a>
+      </li>
+    </ul>
+  </ng-container>
+
+  <ng-template #emptyCart>
+    <ul nz-menu class="w-[300px] text-center !p-4">
+      <li>Giỏ hàng đang trống</li>
+    </ul>
+  </ng-template>
+
+</nz-dropdown-menu>

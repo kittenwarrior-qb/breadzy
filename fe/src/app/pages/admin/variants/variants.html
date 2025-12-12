@@ -1,0 +1,142 @@
+<div class="bg-white p-6 shadow">
+  <h2 class="text-xl font-bold">Quản lý biến thể của: {{ productSlug }}</h2>
+
+  <!-- Thanh tìm kiếm & sắp xếp -->
+  <div class="mb-5 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <a nz-dropdown [nzDropdownMenu]="menu" class="p-3 border border-gray-200 cursor-pointer">
+        Sắp xếp
+      </a>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="applySort('name', 'asc')">Theo bảng chữ cái ( A - Z )</li>
+          <li nz-menu-item (click)="applySort('name', 'desc')">Theo bảng chữ cái ( Z - A )</li>
+          <li nz-menu-item (click)="applySort('price', 'asc')">Giá tăng dần</li>
+          <li nz-menu-item (click)="applySort('price', 'desc')">Giá giảm dần</li>
+          <li nz-menu-item (click)="applySort('createdAt', 'desc')">Mới nhất</li>
+          <li nz-menu-item (click)="applySort('createdAt', 'asc')">Cũ nhất</li>
+        </ul>
+      </nz-dropdown-menu>
+
+      <!-- Tìm kiếm -->
+        <form nz-form [nzLayout]="'inline'" (ngSubmit)="searchVariants()" class="flex items-center gap-2">
+          <nz-form-item>
+            <nz-form-control>
+              <input nz-input placeholder="Tìm kiếm sản phẩm" [(ngModel)]="searchTerm" name="search" class="!p-3 border border-gray-200" />
+            </nz-form-control>
+          </nz-form-item>
+          <button nz-button nzType="default" type="submit" class="p-3">Tìm kiếm</button>
+        </form>
+    </div>
+    <button nz-button nzType="primary" (click)="addVariant()">Thêm sản phẩm</button>
+
+  </div>
+
+  <!-- Bảng Biến Thể -->
+  <nz-table
+    [nzData]="variants"
+    [nzFrontPagination]="false"
+    [nzLoading]="loading"
+    [nzTotal]="pagination.total"
+    [nzPageSize]="pagination.pageSize"
+    [nzPageIndex]="pagination.page"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    class="border border-gray-200"
+  >
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th (click)="applySort('name', 'asc')">Tên biến thể</th>
+        <th (click)="applySort('slug', 'asc')">Slug</th>
+        <th>Hình ảnh</th>
+        <th (click)="applySort('price', 'asc')">Giá</th>
+        <th (click)="applySort('createdAt', 'asc')">Ngày tạo</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let variant of variants; let i = index">
+        <td>{{ (pagination.page - 1) * pagination.pageSize + i + 1 }}</td>
+        <td>{{ variant.name }}</td>
+        <td>{{ variant.slug }}</td>
+        <td>
+          <ng-container *ngIf="variant.gallery && variant.gallery.length > 0">
+            <div class="flex gap-1">
+              <img
+                *ngFor="let img of variant.gallery"
+                [src]="img"
+                alt="Gallery"
+                width="40"
+                height="40"
+                class="rounded border shadow"
+              />
+            </div>
+          </ng-container>
+        </td>
+        <td>{{ variant.price | currency: 'VND' }}</td>
+        <td>{{ variant.createdAt | date: 'short' }}</td>
+        <td>
+          <a (click)="startEdit(variant)">Sửa</a>
+          <a nz-popconfirm nzPopconfirmTitle="Xác nhận xóa?" (nzOnConfirm)="deleteVariant(variant)" class="ml-2">Xóa</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+
+<nz-modal
+  [(nzVisible)]="isModalVisible"
+  [nzTitle]="isEditMode ? 'Chỉnh sửa biến thể' : 'Thêm biến thể mới'"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  [nzOkLoading]="loading"
+      nzWidth="900px"
+
+>
+    <ng-container *nzModalContent>
+
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label>Tên</nz-form-label>
+      <nz-form-control>
+        <input nz-input [(ngModel)]="currentVariant.name" name="name" required />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label>Giá</nz-form-label>
+      <nz-form-control>
+        <input type="number" nz-input [(ngModel)]="currentVariant.price" name="price" required />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-upload
+      nzAction="http://localhost:5050/api/variants/upload"
+      [nzListType]="'picture-card'"
+      [nzFileList]="gallery"
+      [nzShowUploadList]="{ showPreviewIcon: true, showRemoveIcon: true }"
+      [nzPreview]="handlePreview"
+      (nzChange)="onUploadChange($event)"
+    >
+          <div>
+            <nz-icon nzType="plus" />
+            <div style="margin-top: 8px">Upload</div>
+          </div>
+    </nz-upload>
+
+
+<nz-modal
+  [nzVisible]="previewVisible"
+  [nzContent]="modalContent"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-template #modalContent>
+    <img [src]="previewImage" style="width: 100%" />
+  </ng-template>
+</nz-modal>
+
+  </form>
+  </ng-container>
+</nz-modal>
+

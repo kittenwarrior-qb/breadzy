@@ -1,0 +1,95 @@
+<div class="bg-white p-6 shadow">
+  <h2 class="text-xl font-bold">Quản lý danh mục</h2>
+  <div class="mb-5 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <a nz-dropdown [nzDropdownMenu]="menu" class="p-3 border border-gray-200 cursor-pointer">
+         Sắp xếp 
+      </a>
+       <nz-dropdown-menu  #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="applySort('name', 'asc')">Theo bảng chữ cái ( A - Z )</li>
+          <li nz-menu-item (click)="applySort('name', 'desc')">Theo bảng chữ cái ( Z - A )</li>
+          <li nz-menu-item (click)="applySort('createdAt', 'desc')">Mới nhất</li>
+          <li nz-menu-item (click)="applySort('createdAt', 'asc')">Cũ nhất</li>
+        </ul>
+      </nz-dropdown-menu>
+      
+        <form nz-form [nzLayout]="'inline'" (ngSubmit)="searchCategories()" class="flex items-center gap-2">
+          <nz-form-item>
+            <nz-form-control>
+              <input nz-input placeholder="Tìm kiếm danh mục" [(ngModel)]="searchTerm" name="search" class="p-3 border border-gray-200" />
+            </nz-form-control>
+          </nz-form-item>
+          <button nz-button nzType="default" type="submit" class="p-3">Tìm kiếm</button>
+        </form>
+    </div>
+  <button nz-button nzType="primary" (click)="addCategory()">Thêm danh mục</button>
+  </div>
+
+  <!-- Bảng Danh Mục -->
+  <nz-table
+    [nzData]="categories"
+    [nzFrontPagination]="false"
+    [nzLoading]="loading"
+    [nzTotal]="pagination.total"
+    [nzPageSize]="pagination.pageSize"
+    [nzPageIndex]="pagination.page"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    class="border border-gray-200">
+    <thead>
+      <tr>
+        <th nzWidth="60px">ID</th> 
+        <th nzColumnKey="name" (click)="sortByField('name')">Tên danh mục</th>
+        <th nzColumnKey="slug" (click)="sortByField('slug')">Slug</th>
+        <th nzColumnKey="createdAt" (click)="sortByField('createdAt')" nzWidth="150px">Ngày tạo</th>
+        <th nzWidth="150px">Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories; let i = index">
+        <td>{{ (pagination.page - 1) * pagination.pageSize + i + 1 }}</td> 
+        <td>{{ category.name }}</td>
+        <td>{{ category.slug }}</td>
+        <td>{{ category.createdAt | date: 'short' }}</td>
+        <td>
+          <a (click)="startEdit(category)">Sửa</a>
+          <a
+            nz-popconfirm
+            nzPopconfirmTitle="Bạn chắc chắn muốn xóa?"
+            (nzOnConfirm)="deleteCategory(category)"
+            class="ml-2"
+          >Xóa</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <!-- Modal Thêm/Sửa Danh Mục -->
+  <nz-modal
+    [(nzVisible)]="isModalVisible"
+    [nzTitle]="isEditMode ? 'Chỉnh sửa danh mục' : 'Thêm danh mục'"
+    (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()"
+    nzWidth="900px"
+  >
+    <ng-container *nzModalContent>
+      <form nz-form>
+        <nz-form-item>
+          <div class="flex flex-col w-full">
+            <p>Tên danh mục</p>
+            <nz-form-control >
+              <input
+              nz-input
+              [(ngModel)]="currentCategory.name"
+              name="categoryName"
+              required
+              placeholder="Nhập tên danh mục"
+              class="w-full p-3 border border-gray-200"
+              />
+            </nz-form-control>
+          </div>
+        </nz-form-item>
+      </form>
+    </ng-container>
+  </nz-modal>
+</div>

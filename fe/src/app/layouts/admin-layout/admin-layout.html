@@ -1,0 +1,45 @@
+<nz-layout class="h-screen">
+  <!-- Sidebar -->
+  <nz-sider class="!bg-gray-800 text-white h-full" nzCollapsible nzWidth="200px">
+    <div class="logo text-xl font-bold text-center py-6">Breadzy</div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" class="!bg-gray-800 ">
+      <li nz-menu-item routerLink="/admin">
+        <nz-icon nzType="dashboard" />
+        <span>Thống kê</span>
+      </li>
+      <li nz-menu-item routerLink="/admin/categories">
+        <nz-icon nzType="product" />
+        <span>Danh mục</span>
+      </li>
+      <li nz-menu-item routerLink="/admin/products">
+        <nz-icon nzType="product" />
+        <span>Sản phẩm</span>
+      </li>
+      <!-- <li nz-menu-item routerLink="/admin/variants">
+        <nz-icon nzType="product" />
+        <span>Sản phẩm biến thế</span>
+      </li> -->
+      <li nz-menu-item routerLink="/admin/users">
+        <nz-icon nzType="user" />
+        <span>Người dùng</span>
+      </li>
+    </ul>
+  </nz-sider>
+
+  <nz-layout>
+    <nz-header class="!bg-white px-4 flex items-center justify-between shadow-md">
+      <div class="flex items-center justify-between ">
+        <a routerLink="/admin" class="text-lg font-bold text-gray-800">Admin Panel</a>
+        <div class="flex gap-10">
+          <span class="text-gray-600">Profile</span>
+          <span class="text-gray-600">Logout</span>
+        </div>
+
+      </div>
+    </nz-header>
+
+    <nz-content class="p-6 bg-gray-100">
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

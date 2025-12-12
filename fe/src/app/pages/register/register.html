@@ -1,0 +1,68 @@
+<div class="flex items-center justify-center px-4">
+  <div class="bg-white w-full max-w-md mt-6 p-8 border border-gray-200 rounded shadow">
+    <h2 class="text-2xl font-bold text-center mb-6">Register</h2>
+
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" class="space-y-4">
+      <div>
+        <label for="username">Tên người dùng *</label>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Nhập tên người dùng">
+            <input id="username" nz-input formControlName="username" class="w-full" />
+          </nz-form-control>
+        </nz-form-item>
+        <!-- <ng-template #usernameError let-control>
+          <ng-container *ngIf="control.hasError('required')">Tên người dùng là bắt buộc</ng-container>
+          <ng-container *ngIf="control.hasError('minlength')">Tối thiểu 4 ký tự</ng-container>
+          <ng-container *ngIf="control.hasError('maxlength')">Tối đa 20 ký tự</ng-container>
+        </ng-template> -->
+      </div>
+      
+
+      <div>
+        <label for="email">Email *</label>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Email không hợp lệ">
+            <input id="email" type="email" nz-input formControlName="email" class="w-full" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div>
+        <label for="password">Mật khẩu *</label>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Mật khẩu ít nhất 6 ký tự">
+            <input id="password" type="password" nz-input formControlName="password" class="w-full" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div class="flex justify-between items-center text-sm text-gray-700">
+        <label nz-checkbox formControlName="remember">Remember me</label>
+        <a class="hover:underline cursor-pointer text-gray-600">Quên mật khẩu?</a>
+      </div>
+
+      <button
+        nz-button
+        [nzType]="'default'"
+        class="w-full bg-black text-white hover:bg-gray-800 transition mt-2"
+        htmlType="submit"
+        [disabled]="validateForm.invalid"
+      >
+        Đăng ký
+      </button>
+
+      <div class="my-4 flex items-center justify-center text-sm text-gray-500">
+        <hr class="flex-1 border-t border-gray-300" />
+        <span class="px-3">hoặc</span>
+        <hr class="flex-1 border-t border-gray-300" />
+      </div>
+
+      <a
+        routerLink="/login"
+        class="block w-full text-center border border-gray-300 hover:border-gray-500 py-2 rounded text-gray-700 hover:text-black transition"
+      >
+        Đã có tài khoản? Đăng nhập
+      </a>
+    </form>
+  </div>
+</div>

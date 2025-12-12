@@ -1,0 +1,81 @@
+<div class="cart-container max-w-[1280px] mx-auto px-4" style="display: flex; gap: 32px; align-items: flex-start;">
+  <!-- LEFT: Shipping Info -->
+  <div style="flex: 0 0 60%; max-width: 60%; background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+    <h2>Thông tin giao hàng</h2>
+    <form>
+      <div style="margin-bottom: 16px;">
+        <label>Họ và tên</label>
+        <input nz-input [(ngModel)]="fullName" name="fullName" placeholder="Nhập họ và tên" style="width: 100%; margin-top: 4px;" />
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <label>Số điện thoại</label>
+        <input nz-input [(ngModel)]="phone" name="phone" placeholder="Nhập số điện thoại" style="width: 100%; margin-top: 4px;" />
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <label>Địa chỉ giao hàng</label>
+        <input nz-input [(ngModel)]="address" name="address" placeholder="Nhập địa chỉ" style="width: 100%; margin-top: 4px;" />
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <label>Ghi chú (tuỳ chọn)</label>
+        <textarea nz-input rows="2" [(ngModel)]="note" name="note" placeholder="Ghi chú cho đơn hàng" style="width: 100%; margin-top: 4px;"></textarea>
+      </div>
+
+      <h3>Phương thức thanh toán</h3>
+    <div style="margin-bottom: 16px;">
+    <label>
+        <input
+        type="radio"
+        name="payment"
+        value="cod"
+        [(ngModel)]="paymentMethod"
+        />
+        Thanh toán khi nhận hàng
+    </label>
+    </div>
+    <div style="margin-bottom: 16px;">
+    <label>
+        <input
+        type="radio"
+        name="payment"
+        value="vnpay"
+        [(ngModel)]="paymentMethod"
+        />
+        VNPay
+    </label>
+    </div>
+    </form>
+  </div>
+
+  <!-- RIGHT: Order Summary -->
+  <div style="flex: 0 0 40%; max-width: 40%; background: #fafafa; border-radius: 8px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+    <h2>Đơn hàng</h2>
+
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span>Tạm tính:</span>
+      <span>{{ subtotal | currency:'VND' }}</span>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span>Phí vận chuyển:</span>
+      <span>{{ shippingFee | currency:'VND' }}</span>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 18px; margin-top: 16px;">
+      <span>Tổng cộng:</span>
+      <span>{{ total | currency:'VND' }}</span>
+    </div>
+
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="!isFormValid"
+      (click)="onSubmit()"
+      style="width: 100%; margin-top: 24px; font-size: 16px;"
+    >
+      Thanh toán
+    </button>
+  </div>
+</div>

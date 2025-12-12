@@ -1,0 +1,39 @@
+<div class="cart-container max-w-[1280px] mx-auto px-4" style="display: flex; gap: 32px; align-items: flex-start;">
+  <div class="cart-items" style="flex: 0 0 58.3333%; max-width: 58.3333%;">
+    <h2>Giỏ hàng</h2>
+    <ng-container *ngIf="cartItems$ | async as cartItems; else emptyCart">
+      <div *ngFor="let item of cartItems" class="cart-item" style="display: flex; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #eee; padding-bottom: 12px;">
+        <img [src]="item.image" alt="{{item.name}}" style="width: 64px; height: 64px; object-fit: cover; margin-right: 16px; border-radius: 8px;">
+        <div style="flex: 1;">
+          <div><strong>{{item.name}}</strong></div>
+          <div>Tên: {{item.variant}}</div>
+          <div>Giá: {{item.price | currency: 'VND' }}</div>
+          <div class="flex items-center gap-2 mt-1">
+            <button nz-button nzSize="small" (click)="updateQty(item.variantId, item.quantity - 1)" [disabled]="item.quantity <= 1">−</button>
+            <span class="w-6 text-center">{{ item.quantity }}</span>
+            <button nz-button nzSize="small" (click)="updateQty(item.variantId, item.quantity + 1)">+</button>
+          </div>
+        </div>
+        <button (click)="removeFromCart(item.variantId)" style="margin-left: 12px;">Xóa</button>
+      </div>
+    </ng-container>
+    <ng-template #emptyCart>
+      <p>Giỏ hàng đang trống.</p>
+    </ng-template>
+  </div>
+
+  <div class="cart-total" style="flex: 0 0 41.6667%; max-width: 41.6667%; background: #fafafa; border-radius: 8px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+    <h2>Thanh toán</h2>
+    <ng-container *ngIf="cartItems$ | async as cartItems">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+        <span>Tổng sản phẩm:</span>
+        <span>{{ getTotalQuantity() }}</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+        <span>Tổng tiền (chưa ship):</span>
+        <span style="font-weight: bold;">{{ getTotalPrice() | currency: 'VND' }}</span>
+      </div>
+      <button nz-button nzType="primary" style="width: 100%; margin-top: 16px; font-size: 16px;" [routerLink]="['/payment']">Thanh toán ngay</button>
+    </ng-container>
+  </div>
+</div>

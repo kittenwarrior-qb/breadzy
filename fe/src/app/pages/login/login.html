@@ -1,0 +1,61 @@
+<div class="flex items-center justify-center">
+  <div class="bg-white w-full max-w-md mt-6 p-8 border border-gray-200">
+    <h2 class="text-2xl font-bold text-center">Login</h2>
+
+    <div class="mt-10">
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" class="space-y-4">
+        <label for="">Email hoặc tên người dùng</label>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Nhâp đúng email hoặc tên người dùng">
+            <input
+              type="text"
+              nz-input
+              formControlName="username"
+              class="w-full"
+            />
+          </nz-form-control>
+        </nz-form-item>
+
+        <label for="">Mật khẩu</label>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Nhập mật khẩu">
+            <input
+              type="password"
+              nz-input
+              formControlName="password"
+              class="w-full"
+            />
+          </nz-form-control>
+        </nz-form-item>
+
+        <div class="flex justify-between items-center text-sm text-gray-700">
+          <label nz-checkbox formControlName="remember">Remember me</label>
+          <a class="hover:underline cursor-pointer text-gray-600">Quên mật khẩu?</a>
+        </div>
+
+        <button
+          nz-button
+          [nzType]="'default'"
+          class="w-full bg-black text-white hover:bg-gray-800 transition mt-2"
+          htmlType="submit"
+          [disabled]="validateForm.invalid"
+        >
+          Log in
+        </button>
+
+        <div class="my-4 flex items-center justify-center text-sm text-gray-500">
+          <hr class="flex-1 border-t border-gray-300" />
+          <span class="px-3">or</span>
+          <hr class="flex-1 border-t border-gray-300" />
+        </div>
+
+        <a
+          routerLink="/register"
+          class="block w-full text-center border border-gray-300 hover:border-gray-500 py-2 rounded text-gray-700 hover:text-black transition"
+        >
+          Create an account
+        </a>
+      </form>
+    </div>
+  </div>
+</div>

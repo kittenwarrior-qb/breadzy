@@ -1,0 +1,24 @@
+<button
+  nz-button
+  [nzDropdownMenu]="menu"
+  nzTrigger="hover"
+  nzPlacement="bottomLeft"
+  nz-dropdown
+>
+  SẢN PHẨM <span nz-icon nzType="down"></span>
+</button>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li
+      nz-submenu
+      *ngFor="let item of menuData$ | async"
+      [nzTitle]="item.category.name + ' (' + item.products.length + ')'">
+      <ul>
+        <li nz-menu-item *ngFor="let product of item.products">
+          <a [routerLink]="['/', product.category, product.slug, product.variantSlug]">{{ product.name }}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nz-dropdown-menu>

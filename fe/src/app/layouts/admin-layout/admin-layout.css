@@ -1,0 +1,41 @@
+.nz-sider {
+  padding-top: 20px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.nz-menu-item:hover {
+  background-color: #4b5563;
+}
+
+.nz-menu-item span {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.nz-header {
+  padding: 0 16px;
+}
+
+.nz-header .text-lg {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.nz-header .flex {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nz-content {
+  background-color: #f9fafb;
+  padding: 24px;
+}
+
+.nz-layout {
+  background-color: #f9fafb;
+}

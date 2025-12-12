@@ -1,0 +1,12 @@
+.skeleton-card .skeleton-image {
+  width: 100%;
+  height: 200px; /* Giống chiều cao của ảnh sản phẩm */
+}
+
+.skeleton-card .skeleton-content {
+  padding: 1rem;
+}
+
+.skeleton-card .skeleton-content .nz-skeleton-paragraph {
+  margin-top: 0.5rem;
+}

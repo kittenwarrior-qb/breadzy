@@ -1,0 +1,52 @@
+<section *ngIf="variant" class="max-w-[1280px] mx-auto py-10 px-4">
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+    <!-- Ảnh chính và thumbnails -->
+    <div class="md:col-span-6">
+      <img
+        [src]="selectedImage"
+        class="w-full aspect-square object-cover border"
+        alt="Ảnh chính"
+      />
+
+      <div class="flex gap-3 mt-4 flex-wrap">
+        <img
+          *ngFor="let img of allImages"
+          [src]="img.url"
+          (click)="selectImageAndVariant(img)"
+          [class.border-2]="img.url === selectedImage"
+          class="w-25 h-25 object-cover cursor-pointer hover:opacity-80 border"
+        />
+      </div>
+    </div>
+
+    <!-- Thông tin biến thể -->
+    <div class="md:col-span-5">
+      <h1 class="text-2xl font-bold mb-3">{{ variant.name }}</h1>
+      <p class="text-red-600 text-xl mb-5">{{ variant.price | number }} đ</p>
+
+      <div class="mb-6">
+        <label class="block mb-2 font-medium">Chọn biến thể:</label>
+        <div class="flex flex-wrap gap-3">
+          <button
+            *ngFor="let v of variantList"
+            nz-button
+            [nzType]="v.slug === variant.slug ? 'primary' : 'default'"
+            (click)="selectVariant(v)"
+            class="!rounded px-4 py-2"
+          >
+            {{ v.name }}
+          </button>
+        </div>
+      </div>
+
+      <button
+        nz-button
+        nzType="primary"
+        class="bg-black border-black !text-white px-6 py-2 rounded hover:bg-gray-800 transition"
+        (click)="addCartItem()"
+      >
+        Thêm vào giỏ hàng
+      </button>
+    </div>
+  </div>
+</section>

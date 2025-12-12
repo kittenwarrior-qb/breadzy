@@ -1,0 +1,128 @@
+  <div class="bg-white p-6 shadow">
+    <h2 class="text-xl font-bold mb-4">Quản lý sản phẩm</h2>
+
+    <div class="mb-5 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <!-- Dropdown sắp xếp -->
+        <a nz-dropdown [nzDropdownMenu]="menu" class="p-3 border border-gray-200">Sắp xếp</a>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="applySort('name','asc')">A → Z</li>
+            <li nz-menu-item (click)="applySort('name','desc')">Z → A</li>
+            <li nz-menu-item (click)="applySort('createdAt','desc')">Mới nhất</li>
+            <li nz-menu-item (click)="applySort('createdAt','asc')">Cũ nhất</li>
+          </ul>
+        </nz-dropdown-menu>
+
+        <form nz-form [nzLayout]="'inline'" (ngSubmit)="searchProducts()" class="flex items-center gap-2">
+          <nz-form-item>
+            <nz-form-control>
+              <input nz-input placeholder="Tìm kiếm sản phẩm" [(ngModel)]="searchTerm" name="search" class="p-3 border border-gray-200" />
+            </nz-form-control>
+          </nz-form-item>
+          <button nz-button nzType="default" type="submit" class="p-3">Tìm kiếm</button>
+        </form>
+      </div>
+
+      <button nz-button nzType="primary" (click)="addProduct()">Thêm sản phẩm</button>
+    </div>
+
+    <!-- Bảng sản phẩm -->
+    <nz-table
+      [nzData]="products"
+      [nzFrontPagination]="false"
+      [nzLoading]="loading"
+      [nzTotal]="pagination.total"
+      [nzPageSize]="pagination.pageSize"
+      [nzPageIndex]="pagination.page"
+      (nzQueryParams)="onQueryParamsChange($event)"
+      class="border border-gray-200"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="60px">ID</th>
+          <th nzColumnKey="name" (click)="applySort('name', sortBy==='name' && sortOrder==='asc'?'desc':'asc')">Tên</th>
+          <th nzColumnKey="description" nzWidth="250px">Mô tả</th>
+          <th nzColumnKey="slug">Slug</th>
+          <th nzColumnKey="category">Danh mục</th>
+          <th nzColumnKey="isHot">Bán chạy</th>
+          <th nzColumnKey="createdAt" (click)="applySort('createdAt', sortBy==='createdAt' && sortOrder==='asc'?'desc':'asc')" nzWidth="150px">Ngày tạo</th>
+          <th nzWidth="150px">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of products; let i = index">
+          <td>{{ (pagination.page - 1) * pagination.pageSize + i + 1 }}</td>
+          <td>{{ p.name }}</td>
+          <td>
+            <div class="max-w-[200px] overflow-hidden whitespace-nowrap text-ellipsis">
+              {{ p.description }}
+            </div>
+          </td>
+          <td>{{ p.slug }}</td>
+          <td>{{ p.category }}</td>
+          <td>{{ p.isHot ? 'Có' : '' }}</td>
+          <td>{{ p.createdAt | date: 'short' }}</td>
+          <td>
+            <a (click)="startEdit(p)">Sửa</a>
+            <a nz-popconfirm nzPopconfirmTitle="Xác nhận xóa?" (nzOnConfirm)="deleteProduct(p)" class="ml-2">Xóa</a>
+            <a [routerLink]="['/admin/products/detail/', p.slug]" class="ml-2">Chi tiết</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <!-- Modal thêm/sửa -->
+  <nz-modal
+    [(nzVisible)]="isModalVisible"
+    [nzTitle]="isEditMode ? 'Sửa sản phẩm' : 'Thêm sản phẩm'"
+    (nzOnCancel)="handleCancel()"
+    (nzOnOk)="handleOk()"
+    nzWidth="900px"
+  >
+    <ng-container *nzModalContent>
+      <form nz-form [nzLayout]="'vertical'">
+        <nz-form-item class="flex flex-col">
+          <p>Tên sản phẩm</p>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="currentProduct.name" name="name" class="w-full p-3 border border-gray-200" required />
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Mô tả -->
+        <nz-form-item  class="flex flex-col">
+          <p>Mô tả</p>
+          <nz-form-control>
+            <textarea nz-input [(ngModel)]="currentProduct.description" name="description" class="w-full p-3 border border-gray-200"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Danh mục -->
+        <nz-form-item>
+          <nz-form-label>Danh mục</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              [(ngModel)]="currentProduct.category"
+              name="category"
+              nzPlaceHolder="Chọn danh mục"
+              required
+            >
+              <nz-option
+                *ngFor="let cat of categoryOptions"
+                [nzValue]="cat.slug"
+                [nzLabel]="cat.name"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Sản phẩm hot -->
+        <nz-form-item>
+          <nz-form-label>Sản phẩm hot?</nz-form-label>
+          <nz-form-control>
+            <nz-switch [(ngModel)]="currentProduct.isHot" name="isHot"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </ng-container>
+  </nz-modal>
+  </div>
