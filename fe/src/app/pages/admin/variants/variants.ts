@@ -89,6 +89,7 @@ export class Variants implements OnInit {
   gallery: NzUploadFile[] = [];
   previewVisible = false;
   previewImage: string = '';
+  imageUrl: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -288,5 +289,43 @@ export class Variants implements OnInit {
     if (file.status === 'removed') {
       this.gallery = this.gallery.filter(f => f.uid !== file.uid);
     }
+  }
+
+  addImageFromUrl(): void {
+    if (!this.imageUrl || !this.imageUrl.trim()) {
+      this.message.warning('Vui lòng nhập URL hình ảnh');
+      return;
+    }
+
+    // Basic URL validation
+    try {
+      new URL(this.imageUrl);
+    } catch {
+      this.message.error('URL không hợp lệ');
+      return;
+    }
+
+    // Check if URL points to an image
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
+    const urlLower = this.imageUrl.toLowerCase();
+    const isImageUrl = imageExtensions.some(ext => urlLower.includes(ext)) || 
+                       urlLower.includes('image') || 
+                       urlLower.includes('img');
+
+    if (!isImageUrl) {
+      this.message.warning('URL có vẻ không phải là hình ảnh. Vẫn tiếp tục thêm?');
+    }
+
+    const fileItem: NzUploadFile = {
+      uid: `url-${Date.now()}`,
+      name: `Image from URL`,
+      status: 'done',
+      url: this.imageUrl.trim()
+    };
+
+    this.gallery = [...this.gallery, fileItem];
+    this.message.success('Đã thêm hình ảnh từ URL');
+    this.imageUrl = '';
+    this.cdr.markForCheck();
   }
 }

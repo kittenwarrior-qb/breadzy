@@ -40,8 +40,13 @@ export class ProductDetail implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
+      // Read all route parameters including category
+      const category = params.get('category') || '';
       this.productSlug = params.get('slug') || '';
       this.variantSlug = params.get('variantSlug') || '';
+      
+      console.log('Route params:', { category, slug: this.productSlug, variantSlug: this.variantSlug });
+      
       if (this.productSlug) {
         this.fetchVariant();
       }

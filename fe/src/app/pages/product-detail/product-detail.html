@@ -2,51 +2,153 @@
   <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
     <!-- Ảnh chính và thumbnails -->
     <div class="md:col-span-6">
-      <img
-        [src]="selectedImage"
-        class="w-full aspect-square object-cover border"
-        alt="Ảnh chính"
-      />
+      <img [src]="selectedImage" class="w-full aspect-square object-cover border" alt="Ảnh chính" />
 
       <div class="flex gap-3 mt-4 flex-wrap">
-        <img
-          *ngFor="let img of allImages"
-          [src]="img.url"
-          (click)="selectImageAndVariant(img)"
+        <img *ngFor="let img of allImages" [src]="img.url" (click)="selectImageAndVariant(img)"
           [class.border-2]="img.url === selectedImage"
-          class="w-25 h-25 object-cover cursor-pointer hover:opacity-80 border"
-        />
+          class="w-25 h-25 object-cover cursor-pointer hover:opacity-80 border" />
       </div>
     </div>
 
-    <!-- Thông tin biến thể -->
-    <div class="md:col-span-5">
+    <!-- Thông tin biến thể và mô tả chi tiết -->
+    <div class="md:col-span-6">
       <h1 class="text-2xl font-bold mb-3">{{ variant.name }}</h1>
       <p class="text-red-600 text-xl mb-5">{{ variant.price | number }} đ</p>
 
       <div class="mb-6">
         <label class="block mb-2 font-medium">Chọn biến thể:</label>
         <div class="flex flex-wrap gap-3">
-          <button
-            *ngFor="let v of variantList"
-            nz-button
-            [nzType]="v.slug === variant.slug ? 'primary' : 'default'"
-            (click)="selectVariant(v)"
-            class="!rounded px-4 py-2"
-          >
+          <button *ngFor="let v of variantList" nz-button [nzType]="v.slug === variant.slug ? 'primary' : 'default'"
+            (click)="selectVariant(v)" class="!rounded px-4 py-2">
             {{ v.name }}
           </button>
         </div>
       </div>
 
-      <button
-        nz-button
-        nzType="primary"
-        class="bg-black border-black !text-white px-6 py-2 rounded hover:bg-gray-800 transition"
-        (click)="addCartItem()"
-      >
+      <button nz-button nzType="primary"
+        class="bg-black border-black !text-white px-6 py-2 rounded hover:bg-gray-800 transition mb-8"
+        (click)="addCartItem()">
         Thêm vào giỏ hàng
       </button>
+
+      <!-- Thông tin chi tiết sản phẩm -->
+      <div class="border-t pt-6 space-y-6 mt-8 border-gray-200">
+        <!-- Chính sách giao hàng -->
+        <div class="bg-gray-50 p-5 rounded-lg">
+          <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-[#DDB57D] flex-shrink-0 mt-1" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+            </svg>
+            <div>
+              <h3 class="font-bold text-base mb-2">Giao hàng toàn quốc</h3>
+              <ul class="text-sm text-gray-700 space-y-1.5">
+                <li>• Miễn phí giao hàng cho đơn từ 500.000đ trong nội thành</li>
+                <li>• Giao hàng nhanh 2-3 ngày cho khu vực nội thành</li>
+                <li>• Giao hàng 3-5 ngày cho các tỉnh thành khác</li>
+                <li>• Đóng gói cẩn thận, đảm bảo sản phẩm nguyên vẹn</li>
+                <li>• Hỗ trợ kiểm tra hàng trước khi thanh toán</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chính sách đổi trả -->
+        <div class="bg-gray-50 p-5 rounded-lg">
+          <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-[#DDB57D] flex-shrink-0 mt-1" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+              </path>
+            </svg>
+            <div>
+              <h3 class="font-bold text-base mb-2">Đổi trả dễ dàng</h3>
+              <ul class="text-sm text-gray-700 space-y-1.5">
+                <li>• Đổi trả trong vòng 7 ngày nếu sản phẩm lỗi</li>
+                <li>• Hoàn tiền 100% nếu sản phẩm không đúng mô tả</li>
+                <li>• Hỗ trợ đổi size/màu miễn phí (nếu còn hàng)</li>
+                <li>• Quy trình đổi trả đơn giản, nhanh chóng</li>
+                <li>• Chịu phí vận chuyển đổi trả nếu lỗi từ shop</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cam kết chất lượng -->
+        <div class="bg-gray-50 p-5 rounded-lg">
+          <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-[#DDB57D] flex-shrink-0 mt-1" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div>
+              <h3 class="font-bold text-base mb-2">Cam kết chất lượng</h3>
+              <ul class="text-sm text-gray-700 space-y-1.5">
+                <li>• Sản phẩm 100% handmade từ nguyên liệu tự nhiên</li>
+                <li>• Kiểm tra chất lượng kỹ càng trước khi giao</li>
+                <li>• Đảm bảo an toàn cho sức khỏe người dùng</li>
+                <li>• Không chứa chất bảo quản độc hại</li>
+                <li>• Được làm tươi mỗi ngày</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hướng dẫn bảo quản -->
+        <div class="bg-gray-50 p-5 rounded-lg">
+          <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-[#DDB57D] flex-shrink-0 mt-1" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div>
+              <h3 class="font-bold text-base mb-2">Hướng dẫn bảo quản</h3>
+              <ul class="text-sm text-gray-700 space-y-1.5">
+                <li>• Bảo quản ở nhiệt độ phòng, tránh ánh nắng trực tiếp</li>
+                <li>• Nên dùng trong vòng 2-3 ngày để đảm bảo độ tươi ngon</li>
+                <li>• Có thể bảo quản trong tủ lạnh 3-5 ngày</li>
+                <li>• Hâm nóng lại trước khi dùng để có hương vị tốt nhất</li>
+                <li>• Đậy kín để tránh làm khô sản phẩm</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thông tin liên hệ -->
+        <div class="bg-gradient-to-r from-[#DDB57D]/10 to-[#DDB57D]/5 p-5 rounded-lg border border-[#DDB57D]/20">
+          <div class="flex items-center gap-3 mb-3">
+            <svg class="w-6 h-6 text-[#DDB57D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+              </path>
+            </svg>
+            <h3 class="font-bold text-base">Cần hỗ trợ?</h3>
+          </div>
+          <p class="text-sm text-gray-700 mb-2">Liên hệ với chúng tôi để được tư vấn chi tiết về sản phẩm:</p>
+          <div class="flex flex-wrap gap-4 text-sm">
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z">
+                </path>
+              </svg>
+              <strong>Hotline:</strong> 1900 xxxx
+            </span>
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+              </svg>
+              <strong>Email:</strong> support@breadzy.vn
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

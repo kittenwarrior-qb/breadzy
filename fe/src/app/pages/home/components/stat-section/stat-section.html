@@ -1,0 +1,22 @@
+<section class="relative w-full overflow-hidden bg-gray-50 pb-10 md:pb-20">
+    <div class="max-w-[1300px] mx-auto px-4 pt-10">
+        <div class="text-center mb-12">
+            <p class="text-sm text-gray-600 max-w-2xl mx-auto">
+                Hàng ngàn khách hàng đã tin tưởng và đồng hành cùng chúng tôi<br />mang đến những ổ bánh mì thơm ngon
+                mỗi ngày
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div *ngFor="let stat of statsData; let i = index" class="flex flex-col items-center text-center">
+                <div class="flex items-center gap-2 mb-2">
+                    <span nz-icon [nzType]="stat.icon" class="text-xl" style="color: #DDB57D;"></span>
+                    <div class="text-2xl font-bold">
+                        {{ formatNumber(counts[i]) }}<span style="color: #DDB57D;">{{ stat.suffix }}</span>
+                    </div>
+                </div>
+                <p class="text-gray-600 text-sm">{{ stat.label }}</p>
+            </div>
+        </div>
+    </div>
+</section>

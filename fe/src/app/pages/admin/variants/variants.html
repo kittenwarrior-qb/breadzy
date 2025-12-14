@@ -19,30 +19,24 @@
       </nz-dropdown-menu>
 
       <!-- Tìm kiếm -->
-        <form nz-form [nzLayout]="'inline'" (ngSubmit)="searchVariants()" class="flex items-center gap-2">
-          <nz-form-item>
-            <nz-form-control>
-              <input nz-input placeholder="Tìm kiếm sản phẩm" [(ngModel)]="searchTerm" name="search" class="!p-3 border border-gray-200" />
-            </nz-form-control>
-          </nz-form-item>
-          <button nz-button nzType="default" type="submit" class="p-3">Tìm kiếm</button>
-        </form>
+      <form nz-form [nzLayout]="'inline'" (ngSubmit)="searchVariants()" class="flex items-center gap-2">
+        <nz-form-item>
+          <nz-form-control>
+            <input nz-input placeholder="Tìm kiếm sản phẩm" [(ngModel)]="searchTerm" name="search"
+              class="!p-3 border border-gray-200" />
+          </nz-form-control>
+        </nz-form-item>
+        <button nz-button nzType="default" type="submit" class="p-3">Tìm kiếm</button>
+      </form>
     </div>
     <button nz-button nzType="primary" (click)="addVariant()">Thêm sản phẩm</button>
 
   </div>
 
   <!-- Bảng Biến Thể -->
-  <nz-table
-    [nzData]="variants"
-    [nzFrontPagination]="false"
-    [nzLoading]="loading"
-    [nzTotal]="pagination.total"
-    [nzPageSize]="pagination.pageSize"
-    [nzPageIndex]="pagination.page"
-    (nzQueryParams)="onQueryParamsChange($event)"
-    class="border border-gray-200"
-  >
+  <nz-table [nzData]="variants" [nzFrontPagination]="false" [nzLoading]="loading" [nzTotal]="pagination.total"
+    [nzPageSize]="pagination.pageSize" [nzPageIndex]="pagination.page" (nzQueryParams)="onQueryParamsChange($event)"
+    class="border border-gray-200">
     <thead>
       <tr>
         <th>ID</th>
@@ -62,14 +56,8 @@
         <td>
           <ng-container *ngIf="variant.gallery && variant.gallery.length > 0">
             <div class="flex gap-1">
-              <img
-                *ngFor="let img of variant.gallery"
-                [src]="img"
-                alt="Gallery"
-                width="40"
-                height="40"
-                class="rounded border shadow"
-              />
+              <img *ngFor="let img of variant.gallery" [src]="img" alt="Gallery" width="40" height="40"
+                class="rounded border shadow" />
             </div>
           </ng-container>
         </td>
@@ -85,58 +73,63 @@
 </div>
 
 
-<nz-modal
-  [(nzVisible)]="isModalVisible"
-  [nzTitle]="isEditMode ? 'Chỉnh sửa biến thể' : 'Thêm biến thể mới'"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()"
-  [nzOkLoading]="loading"
-      nzWidth="900px"
+<nz-modal [(nzVisible)]="isModalVisible" [nzTitle]="isEditMode ? 'Chỉnh sửa biến thể' : 'Thêm biến thể mới'"
+  (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="loading" nzWidth="900px">
+  <ng-container *nzModalContent>
 
->
-    <ng-container *nzModalContent>
+    <form nz-form>
+      <nz-form-item>
+        <nz-form-label>Tên</nz-form-label>
+        <nz-form-control>
+          <input nz-input [(ngModel)]="currentVariant.name" name="name" required />
+        </nz-form-control>
+      </nz-form-item>
 
-  <form nz-form>
-    <nz-form-item>
-      <nz-form-label>Tên</nz-form-label>
-      <nz-form-control>
-        <input nz-input [(ngModel)]="currentVariant.name" name="name" required />
-      </nz-form-control>
-    </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>Giá</nz-form-label>
+        <nz-form-control>
+          <input type="number" nz-input [(ngModel)]="currentVariant.price" name="price" required />
+        </nz-form-control>
+      </nz-form-item>
 
-    <nz-form-item>
-      <nz-form-label>Giá</nz-form-label>
-      <nz-form-control>
-        <input type="number" nz-input [(ngModel)]="currentVariant.price" name="price" required />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-upload
-      nzAction="http://localhost:5050/api/variants/upload"
-      [nzListType]="'picture-card'"
-      [nzFileList]="gallery"
-      [nzShowUploadList]="{ showPreviewIcon: true, showRemoveIcon: true }"
-      [nzPreview]="handlePreview"
-      (nzChange)="onUploadChange($event)"
-    >
-          <div>
-            <nz-icon nzType="plus" />
-            <div style="margin-top: 8px">Upload</div>
+      <!-- Add Image from URL -->
+      <nz-form-item>
+        <nz-form-label>Thêm hình ảnh từ URL</nz-form-label>
+        <nz-form-control>
+          <div class="flex gap-2">
+            <input nz-input [(ngModel)]="imageUrl" name="imageUrl" placeholder="Nhập URL hình ảnh (https://...)"
+              class="flex-1" />
+            <button nz-button nzType="default" (click)="addImageFromUrl()" type="button">
+              <span nz-icon nzType="plus"></span>
+              Thêm
+            </button>
           </div>
-    </nz-upload>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Upload from file -->
+      <nz-form-item>
+        <nz-form-label>Hoặc upload từ máy tính</nz-form-label>
+        <nz-form-control>
+          <nz-upload nzAction="http://localhost:5050/api/variants/upload" [nzListType]="'picture-card'"
+            [nzFileList]="gallery" [nzShowUploadList]="{ showPreviewIcon: true, showRemoveIcon: true }"
+            [nzPreview]="handlePreview" (nzChange)="onUploadChange($event)">
+            <div>
+              <nz-icon nzType="plus" />
+              <div style="margin-top: 8px">Upload</div>
+            </div>
+          </nz-upload>
+        </nz-form-control>
+      </nz-form-item>
 
 
-<nz-modal
-  [nzVisible]="previewVisible"
-  [nzContent]="modalContent"
-  [nzFooter]="null"
-  (nzOnCancel)="previewVisible = false"
->
-  <ng-template #modalContent>
-    <img [src]="previewImage" style="width: 100%" />
-  </ng-template>
-</nz-modal>
+      <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+        (nzOnCancel)="previewVisible = false">
+        <ng-template #modalContent>
+          <img [src]="previewImage" style="width: 100%" />
+        </ng-template>
+      </nz-modal>
 
-  </form>
+    </form>
   </ng-container>
 </nz-modal>
-

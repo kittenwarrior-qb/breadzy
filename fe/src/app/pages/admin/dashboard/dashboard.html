@@ -1,4 +1,54 @@
-    <div class="bg-white p-6 shadow">
-      <h2 class="text-xl font-bold mb-4">Dashboard</h2>
-      <p>Chào mừng đến trang quản trị!</p>
-    </div>
+<div class="bg-white p-6 shadow">
+  <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Users Card -->
+    <nz-card [nzLoading]="loading" class="shadow-sm hover:shadow-md transition-shadow">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-500 text-sm mb-1">Người dùng</p>
+          <nz-statistic [nzValue]="totalUsers"
+            [nzValueStyle]="{ color: '#3f8600', fontSize: '28px', fontWeight: 'bold' }"></nz-statistic>
+        </div>
+        <div class="bg-green-100 p-4 rounded-full">
+          <span nz-icon nzType="user" nzTheme="outline" class="text-3xl text-green-600"></span>
+        </div>
+      </div>
+    </nz-card>
+
+    <!-- Products Card -->
+    <nz-card [nzLoading]="loading" class="shadow-sm hover:shadow-md transition-shadow">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-500 text-sm mb-1">Sản phẩm</p>
+          <nz-statistic [nzValue]="totalProducts"
+            [nzValueStyle]="{ color: '#DDB57D', fontSize: '28px', fontWeight: 'bold' }"></nz-statistic>
+        </div>
+        <div class="p-4 rounded-full" style="background-color: #DDB57D20;">
+          <span nz-icon nzType="shopping" nzTheme="outline" class="text-3xl" style="color: #DDB57D;"></span>
+        </div>
+      </div>
+    </nz-card>
+
+    <!-- Variants Card -->
+    <nz-card [nzLoading]="loading" class="shadow-sm hover:shadow-md transition-shadow">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-gray-500 text-sm mb-1">Biến thể</p>
+          <nz-statistic [nzValue]="totalVariants"
+            [nzValueStyle]="{ color: '#1890ff', fontSize: '28px', fontWeight: 'bold' }"></nz-statistic>
+        </div>
+        <div class="bg-blue-100 p-4 rounded-full">
+          <span nz-icon nzType="appstore" nzTheme="outline" class="text-3xl text-blue-600"></span>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+
+  <div class="mt-8 p-4 bg-gray-50 rounded-lg">
+    <p class="text-gray-600">
+      <span nz-icon nzType="info-circle" nzTheme="outline" class="mr-2"></span>
+      Chào mừng đến trang quản trị Breadzy! Sử dụng menu bên trái để quản lý sản phẩm và biến thể.
+    </p>
+  </div>
+</div>
