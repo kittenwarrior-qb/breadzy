@@ -16,9 +16,6 @@ const categorySchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// Index for performance
-categorySchema.index({ slug: 1 });
-
 // Auto-generate slug from name
 categorySchema.pre('save', function (next) {
   if (!this.isModified('name')) return next();

@@ -1,5 +1,4 @@
-<header class="w-full sticky top-0 z-50 bg-white" 
-        [ngClass]="isAtTop ? 'shadow-none' : 'shadow-sm'">
+<header class="w-full sticky top-0 z-50 bg-white" [ngClass]="isAtTop ? 'shadow-none' : 'shadow-sm'">
   <div class="w-full max-w-[1280px] mx-auto px-4 py-3 text-sm font-medium flex items-center justify-between">
 
     <!-- Left: Navigation -->
@@ -8,21 +7,18 @@
         <nz-icon nzType="menu" class="w-6 h-6"></nz-icon>
       </button>
       <div class="hidden md:flex gap-5">
-        <a routerLink="/">CỬA HÀNG</a>
+        <a routerLink="/">Shop</a>
         <app-product-dropdown></app-product-dropdown>
-        <a routerLink="/blog">BÀI VIẾT</a>
-        <a routerLink="/faq">LIÊN HỆ</a>
+        <a routerLink="/blog">About us</a>
+        <a routerLink="/faq">Contact</a>
       </div>
     </div>
 
-    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:static md:translate-x-0 md:translate-y-0">
+    <div
+      class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 md:static md:translate-x-0 md:translate-y-0">
       <a routerLink="/">
-        <img
-          src="assets/logo.png"
-          alt="Logo"
-          class="transition-all duration-300"
-          [ngClass]="isAtTop ? 'w-[400px]' : 'w-[200px]'"
-        />
+        <img src="assets/logo.png" alt="Logo" class="transition-all duration-300"
+          [ngClass]="isAtTop ? 'w-[400px]' : 'w-[200px]'" />
       </a>
     </div>
 
@@ -30,23 +26,19 @@
       <div class="flex items-center gap-4">
         <a routerLink="/search"><nz-icon nzType="search" [style.fontSize.px]="18"></nz-icon></a>
         <a routerLink="/user" class="hidden md:inline"><nz-icon nzType="user" [style.fontSize.px]="18"></nz-icon></a>
-        <a routerLink="/wishlist" class="hidden md:inline"><nz-icon nzType="heart" [style.fontSize.px]="18"></nz-icon></a>
-         <app-mini-cart></app-mini-cart>
+        <a routerLink="/wishlist" class="hidden md:inline"><nz-icon nzType="heart"
+            [style.fontSize.px]="18"></nz-icon></a>
+        <app-mini-cart></app-mini-cart>
       </div>
 
       <div *ngIf="!isLoggedIn" class="hidden md:flex items-center gap-2">
-        <button nz-button nzType="default" routerLink="/login">Đăng nhập</button>
-        <button nz-button nzType="primary" routerLink="/register">Đăng ký</button>
+        <button nz-button nzType="default" routerLink="/login">Login</button>
+        <button nz-button nzType="primary" routerLink="/register">Register</button>
       </div>
 
       <div *ngIf="isLoggedIn" class="hidden md:flex items-center">
-        <button
-          nz-button
-          nz-dropdown
-          [nzDropdownMenu]="userMenu"
-          nzTrigger="hover"
-          class="flex flex-row items-center min-w-[180px] max-w-[180px]"
-        >
+        <button nz-button nz-dropdown [nzDropdownMenu]="userMenu" nzTrigger="hover"
+          class="flex flex-row items-center min-w-[180px] max-w-[180px]">
           <a class="truncate">{{ userEmail }}</a>
         </button>
 

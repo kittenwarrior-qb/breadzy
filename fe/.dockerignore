@@ -1,0 +1,15 @@
+# Dockerignore for Frontend
+node_modules
+npm-debug.log
+.angular
+.env
+.env.local
+.git
+.gitignore
+*.md
+.vscode
+.idea
+coverage
+dist
+.editorconfig
+karma.conf.js

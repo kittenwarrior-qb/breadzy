@@ -20,7 +20,7 @@ export const validateEnv = () => {
   }
 
   // Validate JWT_SECRET length
-  if (CONFIG.JWT.SECRET.length < 32) {
+  if (CONFIG.JWT.SECRET && CONFIG.JWT.SECRET.length < 32) {
     console.warn(
       '⚠️  WARNING: JWT_SECRET should be at least 32 characters long for security.\n' +
       'Current length:', CONFIG.JWT.SECRET.length
@@ -28,9 +28,8 @@ export const validateEnv = () => {
   }
 
   // Validate MONGO_URL format
-  if (!CONFIG.MONGO_URL.startsWith('mongodb://') && !CONFIG.MONGO_URL.startsWith('mongodb+srv://')) {
+  if (CONFIG.MONGO_URL && !CONFIG.MONGO_URL.startsWith('mongodb://') && !CONFIG.MONGO_URL.startsWith('mongodb+srv://')) {
     throw new Error('MONGO_URL must start with mongodb:// or mongodb+srv://');
   }
 
-  console.log('✅ Environment variables validated successfully');
 };

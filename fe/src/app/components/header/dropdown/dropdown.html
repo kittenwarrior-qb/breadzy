@@ -1,18 +1,11 @@
-<button
-  nz-button
-  [nzDropdownMenu]="menu"
-  nzTrigger="hover"
-  nzPlacement="bottomLeft"
-  nz-dropdown
->
-  SẢN PHẨM <span nz-icon nzType="down"></span>
+<button nz-button nzType="text" [nzDropdownMenu]="menu" nzTrigger="hover" nzPlacement="bottomLeft" nz-dropdown
+  class="!border-0 hover:!bg-transparent !text-black hover:!text-[#DDB57D] !p-0 !h-auto">
+  Products <span nz-icon nzType="down" class="ml-1"></span>
 </button>
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
-    <li
-      nz-submenu
-      *ngFor="let item of menuData$ | async"
+    <li nz-submenu *ngFor="let item of menuData$ | async"
       [nzTitle]="item.category.name + ' (' + item.products.length + ')'">
       <ul>
         <li nz-menu-item *ngFor="let product of item.products">

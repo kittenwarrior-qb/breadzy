@@ -1,16 +1,12 @@
-<button
-  nz-button
-  nz-dropdown
-  [nzDropdownMenu]="cartDropdown"
-  nzTrigger="hover"
-  class="relative cursor-pointer flex items-center gap-2"
->
-  <nz-icon nzType="shopping-cart" [style.fontSize.px]="20"></nz-icon>
-  <span
-    *ngIf="(cartService.cartItems$ | async)?.length"
-    class="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center"
-  >
-    {{ (cartService.cartItems$ | async)?.length }}
+<button nz-button nzType="text" nz-dropdown [nzDropdownMenu]="cartDropdown" nzTrigger="hover"
+  class="!border-0 !p-0 !h-auto flex items-center hover:!bg-transparent">
+  <span class="relative inline-block">
+    <nz-icon nzType="shopping-cart" [style.fontSize.px]="18" [style.color]="'#000'"></nz-icon>
+    <span *ngIf="(cartService.cartItems$ | async)?.length"
+      class="absolute -top-2 -right-2 bg-red-500 text-white text-xs min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center font-medium"
+      style="font-size: 10px; line-height: 1;">
+      {{ (cartService.cartItems$ | async)?.length }}
+    </span>
   </span>
 </button>
 
@@ -25,30 +21,16 @@
             <div class="text-sm">{{ item.price | currency: 'VND' }}</div>
 
             <div class="flex items-center gap-2 mt-1">
-              <button
-                nz-button
-                nzSize="small"
-                (click)="updateQty(item.variantId, item.quantity - 1)"
-                [disabled]="item.quantity <= 1"
-              >−</button>
+              <button nz-button nzSize="small" (click)="updateQty(item.variantId, item.quantity - 1)"
+                [disabled]="item.quantity <= 1">−</button>
               <span class="w-6 text-center">{{ item.quantity }}</span>
-              <button
-                nz-button
-                nzSize="small"
-                (click)="updateQty(item.variantId, item.quantity + 1)"
-              >+</button>
+              <button nz-button nzSize="small" (click)="updateQty(item.variantId, item.quantity + 1)">+</button>
             </div>
           </div>
         </div>
 
-        <button
-          (click)="handleRemove(item.variantId)"
-          class="absolute top-1 right-1 text-gray-500 "
-          nz-button
-          nzSize="small"
-          nzType="text"
-          nzShape="circle"
-        >
+        <button (click)="handleRemove(item.variantId)" class="absolute top-1 right-1 text-gray-500 " nz-button
+          nzSize="small" nzType="text" nzShape="circle">
           x
         </button>
 
@@ -59,7 +41,7 @@
       </li>
 
       <li class="text-center p-2">
-        <a routerLink="/cart" nz-button  nzSize="small">Xem giỏ hàng</a>
+        <a routerLink="/cart" nz-button nzType="primary" nzSize="small">Xem giỏ hàng</a>
       </li>
     </ul>
   </ng-container>

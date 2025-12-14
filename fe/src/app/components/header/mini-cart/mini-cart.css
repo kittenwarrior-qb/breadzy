@@ -1,0 +1,17 @@
+/* Cart button styling */
+button[nz-button] {
+  transition: all 0.3s ease;
+  vertical-align: middle;
+}
+
+button[nz-button]:hover {
+  background-color: transparent !important;
+  color: #DDB57D !important;
+}
+
+/* Ensure badge doesn't affect button width */
+.relative.inline-block {
+  display: inline-block;
+  line-height: 1;
+}
+

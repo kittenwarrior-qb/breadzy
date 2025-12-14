@@ -29,10 +29,6 @@ const variantSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// Indexes for performance
-variantSchema.index({ slug: 1 });
-variantSchema.index({ productSlug: 1 });
-
 // Auto-generate slug from name
 variantSchema.pre("save", function (next) {
   if (!this.isModified("name")) return next();

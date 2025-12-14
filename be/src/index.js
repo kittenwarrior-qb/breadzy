@@ -1,18 +1,23 @@
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from 'path';
 import { fileURLToPath } from 'url';
+import swaggerUi from 'swagger-ui-express';
 
-// Load environment variables first
-dotenv.config();
+// Load environment variables FIRST - must be imported before other config files
+import './configs/env.js';
+
+// Get directory path for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 import { validateEnv } from "./configs/validateEnv.js";
 import { CONFIG } from "./configs/constants.js";
 import { connectDb } from "./configs/db.js";
 import { errorHandler, notFoundHandler } from "./middlewares/errorHandler.js";
 import { logger } from "./utils/logger.js";
+import swaggerSpec from "./configs/swagger.config.js";
 
 import productRoute from "./routes/product.route.js";
 import categoryRoute from "./routes/category.route.js";
@@ -33,17 +38,17 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS configuration
+// CORS configuration - Allow all origins in development for Swagger
 app.use(cors({
-  origin: CONFIG.CORS_ORIGIN,
-  credentials: true,
+  origin: CONFIG.IS_DEVELOPMENT ? '*' : CONFIG.CORS_ORIGIN,
+  credentials: CONFIG.IS_DEVELOPMENT ? false : true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 app.use(cookieParser());
 
 // Static files
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Request logging in development
@@ -59,6 +64,18 @@ app.use("/api/products", productRoute);
 app.use("/api/categories", categoryRoute);
 app.use("/api/variants", variantRoute);
 app.use("/api/auth", authRoute);
+
+// Swagger Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'Breadzy API Documentation',
+}));
+
+// Serve raw OpenAPI spec
+app.get('/api-docs.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -81,9 +98,8 @@ const startServer = async () => {
     await connectDb();
     
     const server = app.listen(CONFIG.PORT, () => {
-      logger.success(`🚀 Server đang chạy trên cổng ${CONFIG.PORT}`);
-      logger.info(`📝 Environment: ${CONFIG.NODE_ENV}`);
-      logger.info(`🌐 CORS Origin: ${CONFIG.CORS_ORIGIN}`);
+      logger.success(`Server đang chạy trên cổng ${CONFIG.PORT}`);
+      logger.info(`CORS Origin: ${CONFIG.CORS_ORIGIN}`);
     });
 
     // Graceful shutdown

@@ -1,0 +1,36 @@
+/* Footer specific styles */
+footer {
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+/* Ensure links have smooth transitions */
+footer a {
+  transition: color 0.3s ease;
+}
+
+/* Social icons styling */
+footer .social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+footer .social-icon:hover {
+  background-color: rgba(221, 181, 125, 0.1);
+  transform: translateY(-3px);
+}
+
+footer .social-icon nz-icon {
+  transition: transform 0.3s ease;
+}
+
+/* Newsletter input focus */
+footer input[nz-input]:focus {
+  border-color: #DDB57D;
+  box-shadow: 0 0 0 2px rgba(221, 181, 125, 0.1);
+}
+

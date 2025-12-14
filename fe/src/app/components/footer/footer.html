@@ -1,3 +1,141 @@
-    <footer class="w-full bg-gray-100 text-center p-4 text-sm">
-        footer nek
-    </footer>
+<footer class="bg-white border-t border-gray-200">
+    <div class="max-w-[1280px] mx-auto py-12 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <!-- Logo & Social -->
+            <div class="space-y-4">
+                <a routerLink="/" class="inline-block">
+                    <img src="assets/logo.png" alt="Breadzy logo" class="h-8" />
+                </a>
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    Nền tảng bánh mì và bánh ngọt trực tuyến hàng đầu với sản phẩm chất lượng cao.
+                </p>
+                <div class="text-xs text-gray-500 space-y-1 mt-2">
+                    <p>✓ 100% nguyên liệu tự nhiên</p>
+                    <p>✓ Nướng tươi mỗi ngày</p>
+                    <p>✓ Giao hàng miễn phí từ 200k</p>
+                </div>
+                <div class="flex space-x-3">
+                    <a href="#" class="social-icon text-gray-400 hover:text-[#DDB57D] transition-all duration-300">
+                        <nz-icon nzType="instagram" [style.fontSize.px]="22"></nz-icon>
+                    </a>
+                    <a href="#" class="social-icon text-gray-400 hover:text-[#DDB57D] transition-all duration-300">
+                        <nz-icon nzType="facebook" [style.fontSize.px]="22"></nz-icon>
+                    </a>
+                    <a href="#" class="social-icon text-gray-400 hover:text-[#DDB57D] transition-all duration-300">
+                        <nz-icon nzType="twitter" [style.fontSize.px]="22"></nz-icon>
+                    </a>
+                    <a href="#" class="social-icon text-gray-400 hover:text-[#DDB57D] transition-all duration-300">
+                        <nz-icon nzType="youtube" [style.fontSize.px]="22"></nz-icon>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Sản phẩm -->
+            <div class="space-y-4">
+                <h3 class="font-semibold text-base">Sản phẩm</h3>
+                <ul class="space-y-2">
+                    <li>
+                        <a routerLink="/" class="text-sm text-gray-600 hover:text-[#DDB57D] transition-colors">
+                            Tất cả sản phẩm
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/category/banh-mi"
+                            class="text-sm text-gray-600 hover:text-[#DDB57D] transition-colors">
+                            Bánh mì
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/category/banh-ngot"
+                            class="text-sm text-gray-600 hover:text-[#DDB57D] transition-colors">
+                            Bánh ngọt
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/category/banh-mi-sandwich"
+                            class="text-sm text-gray-600 hover:text-[#DDB57D] transition-colors">
+                            Sandwich
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/category/do-uong"
+                            class="text-sm text-gray-600 hover:text-[#DDB57D] transition-colors">
+                            Đồ uống
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Công ty -->
+            <div class="space-y-4">
+                <h3 class="font-semibold text-base">Công ty</h3>
+                <ul class="space-y-2">
+                    <li>
+                        <a routerLink="/about" class="text-sm text-gray-600 hover:text-[#DDB57D] transition-colors">
+                            Giới thiệu
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/blog" class="text-sm text-gray-600 hover:text-[#DDB57D] transition-colors">
+                            Blog
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/faq" class="text-sm text-gray-600 hover:text-[#DDB57D] transition-colors">
+                            Câu hỏi thường gặp
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/contact" class="text-sm text-gray-600 hover:text-[#DDB57D] transition-colors">
+                            Liên hệ
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/careers" class="text-sm text-gray-600 hover:text-[#DDB57D] transition-colors">
+                            Tuyển dụng
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="space-y-4">
+                <h3 class="font-semibold text-base">Đăng ký nhận tin</h3>
+                <p class="text-sm text-gray-600">
+                    Nhận thông tin về sản phẩm mới và ưu đãi đặc biệt
+                </p>
+                <div class="flex flex-col gap-2">
+                    <input nz-input type="email" placeholder="Email của bạn" class="w-full" />
+                    <button nz-button nzType="primary" class="w-full">
+                        Đăng ký
+                    </button>
+                </div>
+                <p class="text-xs text-gray-500">
+                    Bằng cách đăng ký, bạn đồng ý với
+                    <a routerLink="/privacy" class="underline hover:text-[#DDB57D] transition-colors">
+                        Chính sách bảo mật
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Separator -->
+        <div class="border-t border-gray-200 my-8"></div>
+
+        <!-- Bottom -->
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-gray-600">
+                © {{ currentYear }} Breadzy. All rights reserved.
+            </p>
+            <div class="flex items-center gap-4 text-sm text-gray-600">
+                <a routerLink="/terms" class="hover:text-[#DDB57D] transition-colors">
+                    Điều khoản sử dụng
+                </a>
+                <span>•</span>
+                <a routerLink="/privacy" class="hover:text-[#DDB57D] transition-colors">
+                    Chính sách bảo mật
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
